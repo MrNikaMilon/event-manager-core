@@ -1,10 +1,10 @@
 ## About Project
-Данный проект реализовывает потребность компании Х в создании и менеджменте мероприятий и различных локаций.
-Проект содержит два ключевых сервиса:
-* Сервис менеджмента событий и локаций: [Event Managment Core](https://github.com/MrNikaMilon/event-manager-core)
-* Сервис нотификаций юзеров по различным событиям: link
+This project fulfills Company X's need to create and manage events and various locations.
+The project contains two key services:
+* Event and location management service:[Event Managment Core](https://github.com/MrNikaMilon/event-manager-core)
+* Service of notifications of users on various events: link
 
-## Технологический стек проекта
+## Technological stack of the project
 * **Backend**: **Java 21**, **Spring** (**Spring Boot**, **Spring Boot MVC**, **Spring Boot JPA**)
 * **Data Base**: **Hibernate** (*for ORM*), **Liquibase** (*for DB migration*), **PostgreSQL**
 * **Authentication and Authorization**: **Spring Security**, **JWT**, **OAuth2**
