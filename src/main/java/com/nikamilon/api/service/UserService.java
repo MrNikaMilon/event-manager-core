@@ -1,4 +1,4 @@
 package com.nikamilon.api.service;
 
-public class Service {
+public interface UserService {
 }

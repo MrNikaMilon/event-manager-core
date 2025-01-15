@@ -29,6 +29,7 @@
 	<properties>
 		<java.version>21</java.version>
 		<springdoc.version>2.2.0</springdoc.version>
+		<mapstruct.version>1.5.5.Final</mapstruct.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -42,10 +43,6 @@
 				<exclusion>
 					<groupId>ch.qos.logback</groupId>
 					<artifactId>logback-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.logging.log4j</groupId>
-					<artifactId>log4j-to-slf4j</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -82,6 +79,11 @@
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>${springdoc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${mapstruct.version}</version>
 		</dependency>
 	</dependencies>
 	<build>

@@ -14,9 +14,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 		}
 )
 public class EventManagerCoreApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(EventManagerCoreApplication.class, args);
 	}
-
 }
