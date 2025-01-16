@@ -1,4 +1,4 @@
-package com.nikamilon.api.domain.model;
+package com.nikamilon.api.model;
 
 
 import java.time.LocalDateTime;

@@ -1,9 +1,9 @@
 package com.nikamilon.api.mapper;
 
-import com.nikamilon.api.domain.dto.LocationDto;
-import com.nikamilon.api.domain.entity.LocationEntity;
-import com.nikamilon.api.domain.model.Location;
-import com.nikamilon.api.domain.response.LocationResponse;
+import com.nikamilon.api.dto.LocationDto;
+import com.nikamilon.api.entity.LocationEntity;
+import com.nikamilon.api.model.Location;
+import com.nikamilon.api.response.LocationResponse;
 import org.mapstruct.Mapper;
 
 import java.util.List;

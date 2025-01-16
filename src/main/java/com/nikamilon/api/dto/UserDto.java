@@ -1,4 +1,4 @@
-package com.nikamilon.api.domain.dto;
+package com.nikamilon.api.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.nikamilon.api.domain.dictionary;
+package com.nikamilon.api.model.dictionary;
 
 public enum UserRole {
     ADMIN,

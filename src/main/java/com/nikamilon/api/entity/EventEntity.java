@@ -1,6 +1,6 @@
-package com.nikamilon.api.domain.entity;
+package com.nikamilon.api.entity;
 
-import com.nikamilon.api.domain.dictionary.EventType;
+import com.nikamilon.api.model.dictionary.EventType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
-package com.nikamilon.api.domain.dto;
+package com.nikamilon.api.dto;
 
-import com.nikamilon.api.domain.entity.LocationEntity;
-import com.nikamilon.api.domain.model.User;
+import com.nikamilon.api.entity.LocationEntity;
+import com.nikamilon.api.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.nikamilon.api.service;
 
-import com.nikamilon.api.domain.response.LocationResponse;
-import com.nikamilon.api.domain.dto.LocationDto;
+import com.nikamilon.api.response.LocationResponse;
+import com.nikamilon.api.dto.LocationDto;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 

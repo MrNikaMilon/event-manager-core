@@ -1,6 +1,6 @@
 package com.nikamilon.api.repository;
 
-import com.nikamilon.api.domain.entity.UserEntity;
+import com.nikamilon.api.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

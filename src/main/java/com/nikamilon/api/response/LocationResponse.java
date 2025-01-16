@@ -1,6 +1,6 @@
-package com.nikamilon.api.domain.response;
+package com.nikamilon.api.response;
 
-import com.nikamilon.api.domain.model.Event;
+import com.nikamilon.api.model.Event;
 
 import java.time.LocalDateTime;
 import java.util.List;

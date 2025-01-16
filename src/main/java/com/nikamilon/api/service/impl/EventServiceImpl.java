@@ -1,7 +1,7 @@
 package com.nikamilon.api.service.impl;
 
-import org.springframework.stereotype.Service;
+import com.nikamilon.api.service.EventService;
 
 
-public class EventServiceImpl {
+public class EventServiceImpl implements EventService {
 }

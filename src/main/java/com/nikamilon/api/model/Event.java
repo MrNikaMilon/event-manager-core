@@ -1,7 +1,7 @@
-package com.nikamilon.api.domain.model;
+package com.nikamilon.api.model;
 
-import com.nikamilon.api.domain.dictionary.EventType;
-import com.nikamilon.api.domain.entity.LocationEntity;
+import com.nikamilon.api.model.dictionary.EventType;
+import com.nikamilon.api.entity.LocationEntity;
 
 
 import java.time.LocalDateTime;

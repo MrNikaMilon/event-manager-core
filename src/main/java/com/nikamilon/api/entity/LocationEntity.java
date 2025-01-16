@@ -1,4 +1,4 @@
-package com.nikamilon.api.domain.entity;
+package com.nikamilon.api.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
