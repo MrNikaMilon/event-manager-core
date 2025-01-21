@@ -12,4 +12,4 @@ public record LocationDto(
         LocalDateTime dateCreated,
         LocalDateTime dateUpdated,
         String details,
-        List<Event>events) { }
+        List<EventDto>events) { }

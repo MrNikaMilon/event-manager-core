@@ -1,8 +1,11 @@
 package com.nikamilon.api.mapper;
 
-import org.mapstruct.Mapper;
+import com.nikamilon.api.dto.EventDto;
+import com.nikamilon.api.entity.EventEntity;
+import com.nikamilon.api.response.EventResponse;
 
-@Mapper
 public interface EventMapper  {
+    EventResponse toResponse(EventEntity entity);
 
+    EventEntity toEntity(EventDto dto);
 }
