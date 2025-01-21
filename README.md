@@ -1,7 +1,7 @@
 ## About Project
 This project fulfills Company X's need to create and manage events and various locations.
 The project contains two key services:
-* Event and location management service:[Event Managment Core](https://github.com/MrNikaMilon/event-manager-core)
+* Event and location management service: [Event Managment Core](https://github.com/MrNikaMilon/event-manager-core)
 * Service of notifications of users on various events: link
 
 ## Technological stack of the project
