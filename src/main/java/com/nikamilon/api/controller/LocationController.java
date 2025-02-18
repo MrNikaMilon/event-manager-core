@@ -1,8 +1,9 @@
 package com.nikamilon.api.controller;
 
-import com.nikamilon.api.entity.LocationEntity;
+import com.nikamilon.api.exception.LocationNotFoundException;
+import com.nikamilon.api.repository.LocationRepository;
 import com.nikamilon.api.response.LocationResponse;
-import com.nikamilon.api.dto.LocationDto;
+import com.nikamilon.api.dto.LocationDTO;
 import com.nikamilon.api.service.LocationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
-import java.util.UUID;
 
 @Log4j2
 @RestController
@@ -36,17 +36,16 @@ public class LocationController {
             @Valid @PathVariable("location_id") Long locationId
     ){
         log.info("Successful return location by id: {}, with code, {}", locationId, HttpStatus.OK);
-        LocationEntity location = LocationEntity.builder().build();
         return new ResponseEntity<>(
                 locationService.getLocationById(locationId),
                 HttpStatus.OK
         );
     }
 
-        @PostMapping("/locations")
-        public ResponseEntity<LocationResponse> createLocation(
-                @Valid @RequestBody LocationDto inputDto
-        ){
+    @PostMapping("/locations")
+    public ResponseEntity<LocationResponse> createLocation(
+            @Valid @RequestBody LocationDTO inputDto
+    ){
             log.info("Successful create location with resource, {}", inputDto);
             return new ResponseEntity<>(
                     locationService.createLocation(inputDto),
@@ -54,27 +53,26 @@ public class LocationController {
             );
         }
 
-        @DeleteMapping("/locations/{location_id}")
-        public ResponseEntity<LocationResponse> deleteLocationById(
-                @Valid @PathVariable("location_id") Long locationId
-        ){
-            log.info("Successful delete location with id, {}", locationId);
-            return new ResponseEntity<>(
-                    HttpStatus.OK
-            );
-        }
+    @DeleteMapping("/locations/{location_id}")
+    public ResponseEntity<String> deleteLocationById(
+            @Valid @PathVariable("location_id") Long locationId
+    ){
+        locationService.deleteById(locationId);
+        log.info("Successful delete location with id, {}", locationId);
+        return new ResponseEntity<>(
+                "Location with id: %s was deleted".formatted(locationId),
+                HttpStatus.OK
+        );
+    }
 
-        @PutMapping("/locations/{location_id}")
-        public ResponseEntity<LocationResponse> updateLocationById(
-                @PathVariable("location_id") Long locationId,
-                @Valid  @RequestBody LocationDto inputData
-        ){
+    @PutMapping("/locations/{location_id}")
+    public ResponseEntity<LocationResponse> updateLocationById(
+            @PathVariable("location_id") Long locationId,
+            @Valid  @RequestBody LocationDTO inputData
+    ) throws LocationNotFoundException {
             log.info("Successful update location with id, {} and resource: {}", locationId, inputData);
             return new ResponseEntity<>(
-                    locationService.updateLocationById(
-                            locationId,
-                            inputData
-                    ),
+                    locationService.updateLocationById(locationId, inputData),
                     HttpStatus.OK
             );
         }

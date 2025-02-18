@@ -1,6 +1,5 @@
 package com.nikamilon.api.response;
 
-import com.nikamilon.api.dto.EventDto;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -12,6 +11,4 @@ public record UserResponse(
         String email,
         String password,
         String userRole,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt,
-        List<EventDto> events) {}
+        List<EventResponse> events) {}

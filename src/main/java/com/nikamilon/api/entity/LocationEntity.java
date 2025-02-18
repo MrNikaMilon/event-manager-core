@@ -7,8 +7,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,20 +32,21 @@ public class LocationEntity {
     private String address;
 
     @ColumnDefault("0")
-    @Column(name = "address", nullable = false)
+    @Column(name = "capacity", nullable = false)
     private Long capacity;
 
     @Size(max = 200)
-    @Column(name = "address", nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "date_created", nullable = false)
+    @Column(name = "date_created", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @ColumnDefault("now()")
+    @CreationTimestamp
     private LocalDateTime dateCreated;
 
-    @Column(name = "date_updated", nullable = false)
+    @Column(name = "date_updated")
     @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
     private LocalDateTime dateUpdated;
 
     @Size(max = 200)

@@ -10,14 +10,15 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
-@Table(name = "events")
 @Data
 @NoArgsConstructor @AllArgsConstructor
 @Builder
+@Table(name = "events")
 public class EventEntity {
 
     @Id
@@ -64,11 +65,11 @@ public class EventEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userCreated;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_by_event",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private List<UserEntity> usersByEvent;
+    private List<UserEntity> usersByEvent = new ArrayList<>();
 }
