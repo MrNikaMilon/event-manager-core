@@ -1,5 +1,10 @@
 package com.nikamilon.api.dto.response;
 
-//класть в хэдеры jwt токен
-public record JWTResponse() {
+import lombok.Builder;
+
+@Builder
+public record JWTResponse(
+        String token,
+        long expiresIn
+) {
 }

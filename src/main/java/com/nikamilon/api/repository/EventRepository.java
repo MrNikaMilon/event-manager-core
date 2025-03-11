@@ -13,11 +13,11 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<EventEntity, Long> {
     @Query(value = """
                 select e from EventEntity e
-                    where 1=1  
+                    where 1=1
                         and e.maxPlaces between :#{#searchDTO.placesMin()} and :#{#searchDTO.placesMax()}
                         and e.dateStartEvent >= :#{#searchDTO.dateStartAfter()}
                         and e.dateEndEvent <= :#{#searchDTO.dateStartBefore()}
-                        and e.cost between :#{#searchDTO.minCost()} and :#{#searchDTO.costMax()}
+                        and e.cost between :#{#searchDTO.costMin()} and :#{#searchDTO.costMax()}
                         and e.duration between :#{#searchDTO.durationMin()} and :#{#searchDTO.durationMax()}
                         and e.location.id = :#{#searchDTO.locationId()}
                         and e.status in :#{#searchDTO.eventStatus()}

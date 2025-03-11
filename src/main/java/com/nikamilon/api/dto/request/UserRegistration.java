@@ -1,4 +1,10 @@
 package com.nikamilon.api.dto.request;
 
-public record UserRegistration() {
+import lombok.Builder;
+
+@Builder
+public record UserRegistration(
+        String email,
+        String password
+) {
 }
