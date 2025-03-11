@@ -11,5 +11,4 @@ public class Location {
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
     private String details;
-    private List<Event> events;
 }

@@ -1,19 +1,19 @@
-package com.nikamilon.api.response;
+package com.nikamilon.api.dto.response;
 
 import com.nikamilon.api.entity.LocationEntity;
 import com.nikamilon.api.model.User;
 import lombok.Builder;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
 public record EventResponse(
-        String description,
         String name,
-        LocationEntity location,
         String eventType,
-        LocalDateTime dateCreated,
-        LocalDateTime dateUpdate,
-        UserResponse userCreated,
-        List<UserResponse> usersByEvent) {}
+        LocalDateTime dateEvent,
+        Long occupiedPlaces,
+        BigDecimal cost,
+        Long duration,
+        Long maxPlaces) {}

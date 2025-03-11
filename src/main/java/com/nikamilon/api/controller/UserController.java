@@ -1,12 +1,10 @@
 package com.nikamilon.api.controller;
 
-import com.nikamilon.api.dto.UserCredentials;
-import com.nikamilon.api.dto.UserDTO;
-import com.nikamilon.api.model.User;
-import com.nikamilon.api.response.UserResponse;
+import com.nikamilon.api.dto.credentials.UserCredentials;
+import com.nikamilon.api.dto.dtos.UserDTO;
+import com.nikamilon.api.dto.response.UserResponse;
 import com.nikamilon.api.service.UserService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

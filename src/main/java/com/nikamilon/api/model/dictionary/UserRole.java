@@ -1,6 +1,13 @@
 package com.nikamilon.api.model.dictionary;
 
-public enum UserRole {
-    ADMIN,
-    USER
+import org.springframework.security.core.GrantedAuthority;
+
+public enum UserRole implements GrantedAuthority {
+    ROLE_ADMIN,
+    ROLE_USER;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }

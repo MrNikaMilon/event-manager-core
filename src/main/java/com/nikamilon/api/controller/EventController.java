@@ -1,8 +1,9 @@
 package com.nikamilon.api.controller;
 
-import com.nikamilon.api.dto.EventDTO;
+import com.nikamilon.api.dto.request.EventCreateRequestDTO;
 import com.nikamilon.api.dto.request.EventSearchRequest;
-import com.nikamilon.api.response.EventResponse;
+import com.nikamilon.api.dto.request.EventUpdateRequestDTO;
+import com.nikamilon.api.dto.response.EventResponse;
 import com.nikamilon.api.service.EventService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +23,13 @@ public class EventController {
 
     private final EventService eventService;
 
+    @Deprecated(forRemoval = true)
+    private final String userNameForDevelopment = "admin";
+
     //base endpoint
     @GetMapping("/events/{event_id}")
     public ResponseEntity<EventResponse> getEvent(
-            @Valid @PathVariable long eventId) {
+            @Valid @PathVariable("event_id") Long eventId) {
         log.info("Successful return event by id: {}", eventId);
         return new ResponseEntity<>(
                 eventService.getEventById(eventId),
@@ -34,7 +38,7 @@ public class EventController {
     }
 
     @GetMapping("/events/search")
-    public ResponseEntity<List<EventResponse>> getEvents(
+    public ResponseEntity<List<EventResponse>> searchEvents(
             @Valid @RequestBody EventSearchRequest eventSearchRequest
     ){
         log.info("Successful return events by request: {}", eventSearchRequest);
@@ -46,28 +50,29 @@ public class EventController {
 
     @PostMapping("/events")
     public ResponseEntity<EventResponse> createEvent(
-            @Valid @RequestBody EventDTO eventDTO
+            @Valid @RequestBody EventCreateRequestDTO eventCreateDTO
     ){
+        var userName = "Joe";
         return new ResponseEntity<>(
-                eventService.createNewEvent(eventDTO),
+                eventService.createNewEvent(eventCreateDTO, userNameForDevelopment),
                 HttpStatus.CREATED
         );
     }
 
     @PutMapping("/events/{event_id}")
     public ResponseEntity<EventResponse> updateEvent(
-            @PathVariable long evenId,
-            @RequestBody EventDTO eventDTO
+            @PathVariable("event_id") long evenId,
+            @RequestBody EventUpdateRequestDTO eventUpdateDTO
     ){
         return new ResponseEntity<>(
-                eventService.updateEvent(evenId, eventDTO),
+                eventService.updateEvent(evenId, eventUpdateDTO),
                 HttpStatus.OK
         );
     }
 
     @DeleteMapping("/events/{event_id}")
     public ResponseEntity<String> deleteEvent(
-            @PathVariable long evenId
+            @PathVariable("event_id") long evenId
     ){
         eventService.deleteEventById(evenId);
         return new ResponseEntity<>(
@@ -95,7 +100,7 @@ public class EventController {
 
     @PostMapping("/events/registrations/{event_id}")
     public ResponseEntity<EventResponse> createRegistration(
-            @Valid String userName, @PathVariable long evenId
+            @Valid String userName, @PathVariable("event_id") long evenId
     ){
         //would be implemented after added user model in app and security
         throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED, "Endpoint not implemented yet, fuck off!");
@@ -103,7 +108,7 @@ public class EventController {
 
     @DeleteMapping("/events/registrations/cancel/{event_id}")
     public String cancelRegistrationOnEvent(
-            @Valid String userName, @PathVariable long evenId
+            @Valid String userName, @PathVariable("event_id") long evenId
     ){
         //would be implemented after added user model in app and security
         throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED, "Endpoint not implemented yet, fuck off!");

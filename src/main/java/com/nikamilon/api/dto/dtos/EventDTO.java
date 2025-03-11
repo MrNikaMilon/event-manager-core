@@ -1,10 +1,9 @@
-package com.nikamilon.api.dto;
+package com.nikamilon.api.dto.dtos;
 
 import com.nikamilon.api.entity.LocationEntity;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Builder
 public record EventDTO(
@@ -14,5 +13,4 @@ public record EventDTO(
         LocalDateTime dateEnd,
         LocationEntity location,
         String eventType,
-        UserDTO userCreated,
-        List<UserDTO> userId) { }
+        UserDTO userCreated) { }

@@ -1,8 +1,8 @@
 package com.nikamilon.api.mappers;
 
-import com.nikamilon.api.dto.LocationDTO;
+import com.nikamilon.api.dto.dtos.LocationDTO;
 import com.nikamilon.api.entity.LocationEntity;
-import com.nikamilon.api.response.LocationResponse;
+import com.nikamilon.api.dto.response.LocationResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -16,9 +16,9 @@ public interface LocationMapper {
 
     LocationMapper INSTANCE = Mappers.getMapper(LocationMapper.class);
 
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "nameLocation", source = "name")
     LocationEntity locationDTOToEntity(LocationDTO locationDTO);
 
-    @Mapping(source = "events", target = "events")
+    @Mapping(source = "nameLocation", target = "name")
     LocationResponse locationEntityToResponse(LocationEntity locationEntity);
 }

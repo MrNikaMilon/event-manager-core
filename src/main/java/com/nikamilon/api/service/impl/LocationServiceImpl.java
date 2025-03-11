@@ -1,13 +1,14 @@
 package com.nikamilon.api.service.impl;
 
-import com.nikamilon.api.dto.LocationDTO;
-import com.nikamilon.api.entity.EventEntity;
+import com.nikamilon.api.dto.dtos.LocationDTO;
 import com.nikamilon.api.entity.LocationEntity;
-import com.nikamilon.api.exception.LocationNotFoundException;
-import com.nikamilon.api.mappers.EventMapper;
+import com.nikamilon.api.entity.UserEntity;
+import com.nikamilon.api.handler.exception.LocationNotFoundException;
 import com.nikamilon.api.mappers.LocationMapper;
+import com.nikamilon.api.model.dictionary.UserRole;
 import com.nikamilon.api.repository.LocationRepository;
-import com.nikamilon.api.response.LocationResponse;
+import com.nikamilon.api.repository.UserRepository;
+import com.nikamilon.api.dto.response.LocationResponse;
 import com.nikamilon.api.service.LocationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -25,12 +25,11 @@ import java.util.List;
 public class LocationServiceImpl implements LocationService {
 
     private final LocationRepository locationRepository;
-    private LocationMapper locationMapper;
-    private EventMapper eventMapper;
+    private final UserRepository userRepository;
 
-    /**
-     * @return returned lust {@link LocationResponse} to another system or frontend
-     */
+    private LocationMapper locationMapper;
+
+
     @Override
     @Transactional
     public List<LocationResponse> getAllLocations() {
@@ -41,10 +40,6 @@ public class LocationServiceImpl implements LocationService {
                 .toList();
     }
 
-    /**
-     * @param locationId its location id for search in DB
-     * @return returned response {@link LocationResponse} to another system or frontend
-     */
     @Override
     @Transactional
     public LocationResponse getLocationById(Long locationId) {
@@ -54,22 +49,27 @@ public class LocationServiceImpl implements LocationService {
                 .locationEntityToResponse(locationEntity.get());
     }
 
-    /**
-     * @param inputDto {@link LocationDTO} from another system or frontend
-     * @return returned response {@link LocationResponse} to another system or frontend
-     */
     @Override
     @Transactional
     public LocationResponse createLocation(LocationDTO inputDto) {
+        log.info("Create location, {}", inputDto);
         var savedEntity = locationMapper.locationDTOToEntity(inputDto);
+
+        var savedUser = UserEntity.builder()
+                .name("123")
+                .email("123")
+                .password("123")
+                .build();
+        userRepository.save(savedUser);
+
+        savedEntity.setUserCreator(savedUser);
         log.info("Successful create location from dto, {}", inputDto);
+
         var responseFromDB = locationRepository.save(savedEntity);
+
         return locationMapper.locationEntityToResponse(responseFromDB);
     }
 
-    /**
-     * @param locationId location id for delete location in DB
-     */
     @Override
     @Transactional
     public void deleteById(Long locationId) {
@@ -82,12 +82,6 @@ public class LocationServiceImpl implements LocationService {
         }
     }
 
-    /**
-     * @param locationId id for search existing location in DB
-     * @param locationDTO new data {@link LocationDTO} from frontend or another service
-     * @return returned response {@link LocationResponse} to frontend or another service
-     * @throws LocationNotFoundException exception if requested entity not found in DB
-     */
     @Override
     @Transactional
     public LocationResponse updateLocationById(Long locationId, LocationDTO locationDTO) throws LocationNotFoundException {
@@ -112,12 +106,6 @@ public class LocationServiceImpl implements LocationService {
         findLocation.setCapacity(newData.capacity());
         findLocation.setDescription(newData.description());
         findLocation.setDateUpdated(LocalDateTime.now());
-        findLocation.setDetails(newData.details());
-        List<EventEntity> updatedEntity = new ArrayList<>();
-        newData.eventsId().forEach(eventId -> {
-            updatedEntity.add(eventMapper.eventDTOToEntity(eventId));
-        });
-        findLocation.setEvents(updatedEntity);
         log.info("Successful update location, {}", findLocation);
         return findLocation;
     }

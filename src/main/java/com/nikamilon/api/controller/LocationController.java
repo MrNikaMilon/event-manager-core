@@ -1,9 +1,8 @@
 package com.nikamilon.api.controller;
 
-import com.nikamilon.api.exception.LocationNotFoundException;
-import com.nikamilon.api.repository.LocationRepository;
-import com.nikamilon.api.response.LocationResponse;
-import com.nikamilon.api.dto.LocationDTO;
+import com.nikamilon.api.handler.exception.LocationNotFoundException;
+import com.nikamilon.api.dto.response.LocationResponse;
+import com.nikamilon.api.dto.dtos.LocationDTO;
 import com.nikamilon.api.service.LocationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +32,7 @@ public class LocationController {
 
     @GetMapping("/locations/{location_id}")
     public ResponseEntity<LocationResponse> getLocationById(
-            @Valid @PathVariable("location_id") Long locationId
+            @PathVariable("location_id") Long locationId
     ){
         log.info("Successful return location by id: {}, with code, {}", locationId, HttpStatus.OK);
         return new ResponseEntity<>(
@@ -51,11 +50,11 @@ public class LocationController {
                     locationService.createLocation(inputDto),
                     HttpStatus.OK
             );
-        }
+    }
 
     @DeleteMapping("/locations/{location_id}")
     public ResponseEntity<String> deleteLocationById(
-            @Valid @PathVariable("location_id") Long locationId
+            @PathVariable("location_id") Long locationId
     ){
         locationService.deleteById(locationId);
         log.info("Successful delete location with id, {}", locationId);

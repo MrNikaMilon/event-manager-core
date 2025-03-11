@@ -9,55 +9,57 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "locations")
-@Data
+@Table(name = "locations", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "location_id", "location_name", "address"
+        })
+})
+@Data @Builder
 @NoArgsConstructor @AllArgsConstructor
-@Builder
+@EntityListeners(AuditingEntityListener.class)
 public class LocationEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "location_id_gen")
     @SequenceGenerator(name = "location_id_gen", sequenceName = "location_id_seq")
     @Column(name = "location_id")
     private Long id;
 
-    @Size(max = 100)
-    @Column(name = "address", nullable = false)
+    @Column(name = "location_name", scale = 100, nullable = false)
+    private String nameLocation;
+
+    @Column(name = "address", scale = 100, nullable = false)
     private String address;
 
     @ColumnDefault("0")
     @Column(name = "capacity", nullable = false)
     private Long capacity;
 
-    @Size(max = 200)
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", scale = 200, nullable = false)
     private String description;
 
     @Column(name = "date_created", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
+    @CreatedDate
     private LocalDateTime dateCreated;
 
     @Column(name = "date_updated")
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
+    @LastModifiedBy
     private LocalDateTime dateUpdated;
 
-    @Size(max = 200)
-    @Column(name = "location_details")
-    private String details;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "event_by_location",
-            joinColumns = @JoinColumn(name = "event_id"),
-            inverseJoinColumns = @JoinColumn(name = "location_id")
-    )
-    private List<EventEntity> events;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_creator_id", referencedColumnName = "user_id", nullable = false)
+    private UserEntity userCreator;
 }

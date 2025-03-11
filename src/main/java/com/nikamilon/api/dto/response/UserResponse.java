@@ -1,4 +1,4 @@
-package com.nikamilon.api.dto;
+package com.nikamilon.api.dto.response;
 
 import lombok.Builder;
 
@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
-public record UserDTO(
+public record UserResponse(
         String name,
         String email,
         String password,
-        Integer age) { }
+        String userRole) {}

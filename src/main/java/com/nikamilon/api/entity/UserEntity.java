@@ -2,25 +2,21 @@ package com.nikamilon.api.entity;
 
 import com.nikamilon.api.model.dictionary.UserRole;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
-@Table(name ="users")
-@Data
+@Builder @Data
 @NoArgsConstructor @AllArgsConstructor
-@Builder
+@Entity @Table(name ="users")
+@EntityListeners(AuditingEntityListener.class)
 public class UserEntity {
 
     @Id
@@ -29,42 +25,22 @@ public class UserEntity {
     @Column(name = "user_id", nullable = false)
     private Long id;
 
-    @Size(max = 200)
-    @NotNull
     @Column(name = "name", nullable = false, length = 200)
     private String name;
 
-    @Size(max = 200)
     @Column(name = "email", length = 200)
     private String email;
 
-    @Size(max = 200)
-    @NotNull
     @Column(name = "password", nullable = false, length = 200)
     private String password;
 
-    @Size(max = 20)
-    @NotNull
-    @Column(name = "user_role", nullable = false, length = 20)
-    private UserRole role;
-
-    @ColumnDefault("now()")
     @CreatedDate
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_created", nullable = false)
-    private LocalDateTime createdAt;
+    @Column(name = "date_created", nullable = false, updatable = false)
+    private LocalDateTime createdDate;
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_updated", nullable = false)
-    private LocalDateTime updatedAt;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "events_by_user",
-            joinColumns = @JoinColumn(name = "event_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<EventEntity> events = new ArrayList<>();;
+    @LastModifiedBy
+    private LocalDateTime updatedDate;
 }

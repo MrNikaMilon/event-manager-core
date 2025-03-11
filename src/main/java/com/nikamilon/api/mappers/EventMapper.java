@@ -1,13 +1,12 @@
 package com.nikamilon.api.mappers;
 
-import com.nikamilon.api.dto.EventDTO;
+import com.nikamilon.api.dto.dtos.EventDTO;
+import com.nikamilon.api.dto.request.EventCreateRequestDTO;
+import com.nikamilon.api.dto.request.EventUpdateRequestDTO;
 import com.nikamilon.api.entity.EventEntity;
-import com.nikamilon.api.response.EventResponse;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.Mappings;
-import org.mapstruct.factory.Mappers;
+import com.nikamilon.api.model.dictionary.EventType;
+import com.nikamilon.api.dto.response.EventResponse;
+import org.mapstruct.*;
 
 @Mapper(
         componentModel = MappingConstants.ComponentModel.SPRING,
@@ -15,21 +14,34 @@ import org.mapstruct.factory.Mappers;
 )
 public interface EventMapper {
 
-    EventMapper eventMapper = Mappers.getMapper(EventMapper.class);
+    @Mappings({
+            @Mapping(target = "location", source = "locationId", ignore = true),
+            @Mapping(source = "eventType", target = "type", qualifiedByName = "mapEventType"),
+    })
+    EventEntity eventCreationDTOToEntity(EventCreateRequestDTO eventCreateRequestDTO);
+
+    @Mappings({
+            @Mapping(target = "location", source = "locationId", ignore = true),
+            @Mapping(source = "eventType", target = "type", qualifiedByName = "mapEventType"),
+    })
+    EventEntity eventCreationDTOToEntity(EventUpdateRequestDTO eventUpdateRequestDTO);
 
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(source = "eventType", target = "type", ignore = true),
-            @Mapping(target = "dateCreated", ignore = true),
-            @Mapping(target = "dateUpdate", ignore = true),
-            @Mapping(source = "userId", target = "usersByEvent", ignore = true)
+            @Mapping(source = "eventType", target = "type", qualifiedByName = "mapEventType"),
     })
     EventEntity eventDTOToEntity(EventDTO eventDTO);
 
-    @Mappings({
-            @Mapping(source = "type", target = "eventType", ignore = true),
-            @Mapping(target = "dateCreated", ignore = true),
-            @Mapping(target = "dateUpdate", ignore = true)
-    })
+    @Mapping(source = "type", target = "eventType", qualifiedByName = "mapEventTypeString")
     EventResponse eventEntityToResponse(EventEntity eventEntity);
+
+    @Named("mapEventType")
+    default EventType mapEventType(String eventType) {
+        return EventType.getEventByString(eventType);
+    }
+
+    @Named("mapEventTypeString")
+    default String mapEventType(EventType eventType) {
+        return EventType.getDescriptionEvents(eventType);
+    }
 }
